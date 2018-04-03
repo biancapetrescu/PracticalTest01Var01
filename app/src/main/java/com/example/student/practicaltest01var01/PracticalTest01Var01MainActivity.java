@@ -15,6 +15,7 @@ public class PracticalTest01Var01MainActivity extends Activity {
     private Button west = null;
     public EditText editText = null;
     public EditText editText2 = null;
+    public int n = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,28 +29,44 @@ public class PracticalTest01Var01MainActivity extends Activity {
         south.setOnClickListener(buttonClickListener);
         east.setOnClickListener(buttonClickListener);
         west.setOnClickListener(buttonClickListener);
-
+        editText2 = (EditText)findViewById(R.id.edit_text2);
         if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey("leftCount")) {
-                editText2.setText(savedInstanceState.getString("leftCount"));
+            if (savedInstanceState.containsKey("edittext2")) {
+                editText2.setText(savedInstanceState.getString("edittext2"));
             } else {
                 editText2.setText(String.valueOf(0));
             }
 
         } else {
-            leftEditText.setText(String.valueOf(0));
-            rightEditText.setText(String.valueOf(0));
+            editText2.setText(String.valueOf(0));
+
         }
 
     }
 
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString("edittext2", editText2.getText().toString());
+
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState.containsKey("edittext2")) {
+            editText2.setText(savedInstanceState.getString("edittext2"));
+        } else {
+            editText2.setText(String.valueOf(0));
+        }
+
+    }
     private ButtonClickListener buttonClickListener = new ButtonClickListener();
-    private class ButtonClickListener implements View.OnClickListener {
+    class ButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             String s = "";
+
             switch(view.getId()) {
                 case R.id.north_button:
+                    n++;
+                    editText2.setText(String.valueOf(n));
                     if (s.compareTo("") != 0) {
                         s = s + ",North";
                         editText.setText(s);
@@ -60,6 +77,8 @@ public class PracticalTest01Var01MainActivity extends Activity {
                     }
                     break;
                 case R.id.south_button:
+                    n++;
+                    editText2.setText(String.valueOf(n));
                     if (s.compareTo("") != 0) {
                         s = s + ",South";
                         editText.setText(s);
@@ -70,6 +89,8 @@ public class PracticalTest01Var01MainActivity extends Activity {
                     }
                     break;
                 case R.id.east_button:
+                    editText2.setText(String.valueOf(n));
+                    n++;
                     if (s.compareTo("") != 0) {
                         s = s + ",East";
                         editText.setText(s);
@@ -80,6 +101,8 @@ public class PracticalTest01Var01MainActivity extends Activity {
                     }
                     break;
                 case R.id.west_button:
+                    n++;
+                    editText2.setText(String.valueOf(n));
                     if (s.compareTo("") != 0) {
                         s = s + ",West";
                         editText.setText(s);
